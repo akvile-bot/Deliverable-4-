@@ -1,47 +1,32 @@
-"""Temperature class supporting Celsius ("C"), Fahrenheit ("F") and Kelvin ("K")."""
-
-from __future__ import annotations
+from __future__ import annotations  # lets us use Temperature as a type hint inside the class
 
 
 class Temperature:
-    """An immutable temperature value with a unit.
-
-    All comparisons are done in Kelvin with an absolute tolerance of 1e-9,
-    so temperatures given in different units can be compared directly.
-    """
-
     VALID_UNITS = ("C", "F", "K")
-    TOLERANCE = 1e-9
+    TOLERANCE = 1e-9  # used for all floating-point comparisons
 
-    __slots__ = ("_value", "_unit")
+    __slots__ = ("_value", "_unit")  # prevents adding new attributes to an instance
 
     def __init__(self, value: float, unit: str = "C") -> None:
+        # bool is a subclass of int, so we reject it explicitly
         if isinstance(value, bool) or not isinstance(value, (int, float)):
             raise TypeError(f"value must be a number, got {type(value).__name__}")
 
         self._unit = self._validate_unit(unit)
         self._value = float(value)
 
+        # Check in Kelvin; the tolerance allows tiny rounding errors at absolute zero
         if self.to_kelvin() < -self.TOLERANCE:
-            raise ValueError(
-                f"{self._value} {self._unit} is below absolute zero (0 K)"
-            )
+            raise ValueError(f"{self._value} {self._unit} is below absolute zero (0 K)")
 
-    # ------------------------------------------------------------------
-    # Helpers
-    # ------------------------------------------------------------------
     @classmethod
     def _validate_unit(cls, unit: str) -> str:
-        """Return the unit in upper case, or raise ValueError if it is invalid."""
+        # Accept "c", "f", "k" as well, and always store the unit in upper case
         if not isinstance(unit, str) or unit.upper() not in cls.VALID_UNITS:
-            raise ValueError(
-                f"Invalid unit {unit!r}; expected one of {cls.VALID_UNITS}"
-            )
+            raise ValueError(f"Invalid unit {unit!r}; expected one of {cls.VALID_UNITS}")
         return unit.upper()
 
-    # ------------------------------------------------------------------
-    # Read-only attributes
-    # ------------------------------------------------------------------
+    # Properties without setters make value and unit read-only
     @property
     def value(self) -> float:
         return self._value
@@ -50,9 +35,6 @@ class Temperature:
     def unit(self) -> str:
         return self._unit
 
-    # ------------------------------------------------------------------
-    # Conversions
-    # ------------------------------------------------------------------
     def to_celsius(self) -> float:
         if self._unit == "C":
             return self._value
@@ -75,29 +57,21 @@ class Temperature:
         return (self._value - 32) * 5 / 9 + 273.15  # from Fahrenheit
 
     def convert_to(self, target_unit: str) -> Temperature:
-        """Return a new Temperature expressed in ``target_unit``."""
         target = self._validate_unit(target_unit)
-        converters = {
-            "C": self.to_celsius,
-            "F": self.to_fahrenheit,
-            "K": self.to_kelvin,
-        }
+        converters = {"C": self.to_celsius, "F": self.to_fahrenheit, "K": self.to_kelvin}
+        # Returns a new object, so the original is never changed
         return Temperature(converters[target](), target)
 
-    # ------------------------------------------------------------------
-    # String representations
-    # ------------------------------------------------------------------
     def __repr__(self) -> str:
         return f"Temperature({self._value!r}, '{self._unit}')"
 
     def __str__(self) -> str:
-        # Kelvin is an absolute scale and is written without the degree sign.
+        # Kelvin is written without the degree sign (SI convention)
         symbol = "K" if self._unit == "K" else f"°{self._unit}"
         return f"{self._value:.2f} {symbol}"
 
-    # ------------------------------------------------------------------
-    # Comparisons (done in Kelvin, with tolerance)
-    # ------------------------------------------------------------------
+    # All comparisons convert to Kelvin, so different units can be compared.
+    # NotImplemented lets Python handle comparisons with other types.
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Temperature):
             return NotImplemented
@@ -111,6 +85,7 @@ class Temperature:
     def __lt__(self, other: object) -> bool:
         if not isinstance(other, Temperature):
             return NotImplemented
+        # Must be smaller by more than the tolerance, otherwise they count as equal
         return self.to_kelvin() < other.to_kelvin() - self.TOLERANCE
 
     def __le__(self, other: object) -> bool:
@@ -128,6 +103,5 @@ class Temperature:
             return NotImplemented
         return self > other or self == other
 
-    # Equality uses a tolerance, so equal objects could get different hashes.
-    # Temperature objects are therefore deliberately unhashable.
+    # Equality with a tolerance can't be matched by a hash, so the class is unhashable
     __hash__ = None
