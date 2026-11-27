@@ -1,9 +1,14 @@
-* 143a7aa - Akvile Urbonaite, 2 minutes ago : Fixing the codes with comments and testing
-* 772daf4 - Akvile Urbonaite, 22 minutes ago : Add requirements.txt
-* e3155f9 - Akvile Urbonaite, 22 minutes ago : Add gitignore and remove pycache
-* 29e6fd8 - Herman, 33 minutes ago : hei?
-* ce1c8ac - Herman, 33 minutes ago : message
-* 14abb48 - Herman, 37 minutes ago : yessir
+* f3842db - Akvile Urbonaite, 28 seconds ago : comments
+* af3cffc - Akvile Urbonaite, 3 minutes ago : newlink
+* e1de4a3 - Akvile Urbonaite, 10 minutes ago : new requirments
+* 96bf8fc - Akvile Urbonaite, 12 minutes ago : writing gitlog and Ailog
+* ba4782f - Akvile Urbonaite, 14 minutes ago : Add git log
+* 143a7aa - Akvile Urbonaite, 16 minutes ago : Fixing the codes with comments and testing
+* 772daf4 - Akvile Urbonaite, 36 minutes ago : Add requirements.txt
+* e3155f9 - Akvile Urbonaite, 36 minutes ago : Add gitignore and remove pycache
+* 29e6fd8 - Herman, 47 minutes ago : hei?
+* ce1c8ac - Herman, 47 minutes ago : message
+* 14abb48 - Herman, 51 minutes ago : yessir
 * 384eca4 - AkvileUrbonaite, 13 hours ago : Add files via upload
 * 4a1ec60 - AkvileUrbonaite, 13 hours ago : Add files via upload
 * 39e8229 - AkvileUrbonaite, 13 hours ago : Initial commit
