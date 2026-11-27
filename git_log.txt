@@ -1,0 +1,9 @@
+* 143a7aa - Akvile Urbonaite, 2 minutes ago : Fixing the codes with comments and testing
+* 772daf4 - Akvile Urbonaite, 22 minutes ago : Add requirements.txt
+* e3155f9 - Akvile Urbonaite, 22 minutes ago : Add gitignore and remove pycache
+* 29e6fd8 - Herman, 33 minutes ago : hei?
+* ce1c8ac - Herman, 33 minutes ago : message
+* 14abb48 - Herman, 37 minutes ago : yessir
+* 384eca4 - AkvileUrbonaite, 13 hours ago : Add files via upload
+* 4a1ec60 - AkvileUrbonaite, 13 hours ago : Add files via upload
+* 39e8229 - AkvileUrbonaite, 13 hours ago : Initial commit
